@@ -19,6 +19,8 @@ namespace TicTacToe.Core.Entities
                 for (int j = 0; j < 3; j++)
                     fields[(i, j)] = Shape.Empty;
         }
+        
+
         public void PlaceFigure(int posX, int posY, Shape placedValue)
         {
             if (placedValue == Shape.Empty)
@@ -30,6 +32,10 @@ namespace TicTacToe.Core.Entities
             fields[(posX, posY)] = placedValue;
 
             CheckWinAndSetWinner(placedValue);
+        }
+        public void FlushBoard()
+        {
+            fields.Clear();
         }
 
 

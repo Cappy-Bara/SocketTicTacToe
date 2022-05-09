@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocketTicTacToe.API", "SocketTicTacToe.API\SocketTicTacToe.API.csproj", "{5657BBDA-B6AB-4C42-BEDF-C5DFD808842F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocketTicTacToe.API", "SocketTicTacToe.API\SocketTicTacToe.API.csproj", "{5657BBDA-B6AB-4C42-BEDF-C5DFD808842F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicTacToe.Core", "TicTacToe.Core\TicTacToe.Core.csproj", "{D2C7D33E-BAEF-4765-A5B3-DFE626C1AA23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicTacToe.Core", "TicTacToe.Core\TicTacToe.Core.csproj", "{D2C7D33E-BAEF-4765-A5B3-DFE626C1AA23}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocketTicTacToe.ConsoleClient", "..\ConsoleClient\SocketTicTacToe.ConsoleClient\SocketTicTacToe.ConsoleClient.csproj", "{E8146A51-A815-4BBF-9B88-F35AC785F8B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{D2C7D33E-BAEF-4765-A5B3-DFE626C1AA23}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2C7D33E-BAEF-4765-A5B3-DFE626C1AA23}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2C7D33E-BAEF-4765-A5B3-DFE626C1AA23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8146A51-A815-4BBF-9B88-F35AC785F8B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8146A51-A815-4BBF-9B88-F35AC785F8B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8146A51-A815-4BBF-9B88-F35AC785F8B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8146A51-A815-4BBF-9B88-F35AC785F8B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

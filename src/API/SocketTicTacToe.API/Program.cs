@@ -1,19 +1,34 @@
+using SocketTicTacToe.API.Hubs;
 using SocketTicTacToe.API.Middleware.ErrorHandling;
-using TicTacToe.Core;
+using TicTacToe.Core.Entities;
+using TicTacToe.Core.Storages;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-builder.Services.AddCore();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddSignalR();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSingleton<Board>();
+builder.Services.AddSingleton<UsersStorage>();
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(builder =>
+    {
+        builder
+        .AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
+
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -24,9 +39,13 @@ app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseRouting();
 
-app.UseCore();
+app.UseCors();
+
+app.MapHub<GameHub>("/play");
+
+app.UseAuthorization();
 
 app.MapControllers();
 
