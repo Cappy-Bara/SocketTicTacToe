@@ -1,3 +1,4 @@
+using SocketTicTacToe.API.Middleware.ErrorHandling;
 using TicTacToe.Core;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 
