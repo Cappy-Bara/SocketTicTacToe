@@ -1,7 +1,13 @@
 import React from 'react';
 
+import TicTacToe from './TicTacToe';
+
 function App() {
-    return <h1>TicTacToe</h1>;
+    return (
+        <div className="App">
+            <TicTacToe />
+        </div>
+    );
 }
 
 export default App;

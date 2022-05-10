@@ -1,13 +1,97 @@
-body {
-    background-color: #ffeaa7;
-    min-height: 70vh;
-    padding: 1rem;
+* {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
+    font-family: 'Architects Daughter', cursive;
+}
+
+/*
+    General:
+    - change colors
+*/
+
+.square {
+    background: #0dc51dae;
+    height: 8rem; /*change size of each square*/
+    width: 8rem;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: hsla(40, 95%, 31%, 0.543);
+    font-size: 7rem;
+    border: 2px solid #26a91d;
+    border-radius: 10px;
+}
+
+.square:hover {
+    background: #26a91d;
+    border: 2px solid #0dc51dae;
+}
+
+.square.clicked {
+    /* background: #26a91d; */
+    cursor: not-allowed; /*type of coursors*/
+}
+
+.App {
+    height: 100vh;
+    background: #9b69045c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    align-items: center;
+    justify-content: center;
+    grid-gap: 5px;
+}
+
+.end-game-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    flex-direction: column;
+    top: 0;
+    left: 0;
+    height: 100%; /*ustaw na full ekran*/
+    width: 100%; /*ustaw na full ekran*/
+    background: rgb(0, 0, 0, 0.8);
+}
+
+.btn {
+    background: #26a91d;
+    color: hwb(40 2% 42% / 0.838);
+    border: 2px solid hsla(40, 95%, 31%, 0.543);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    padding: 10px 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s ease-out;
+    max-height: 7rem;
+}
+
+.btn:hover {
+    background: hsla(40, 95%, 31%, 0.752);
+    color: #26a91d;
+    border: 2px solid #26a91d;
+}
+
+.win-text {
+    color: white;
+    font-size: 5rem;
+    text-align: center;
     justify-content: center;
     align-items: center;
-    color: hsl(198, 1%, 29%);
-    font-family: 'Architects Daughter', cursive;
-    text-align: center;
-    font-size: 130%;
+}
+
+.win-history {
+    color: white;
+    font-size: 4rem;
+    margin: 2rem 0;
 }
