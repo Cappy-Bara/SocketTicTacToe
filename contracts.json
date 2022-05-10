@@ -51,10 +51,11 @@
 //Description: Message which shoud be send when clicking on field
 //Schema:
 {
-  "PosX": 1, //X-axis field position. Permitted values: 0-2;
+  "PosX": 1, //X-axis field position. Permitted values: 0-2, down-left corner 0-0 ;
   "PosY": 0, //Y-axis field position. Permitted values: 0-2;
   "Shape": "X" //Shape played by currently played user.
 }
+
 
 //Name: Reset
 //Description: Message, which should be send to reset the game, for example after winning.
