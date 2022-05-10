@@ -11,7 +11,7 @@ namespace TicTacToe.Core.Entities
     {
         private readonly Dictionary<(int, int), Shape> fields = new();
 
-        public bool IsFinished { get; private set; } = false;
+        public bool GameIsFinished { get; private set; } = false;
         public Shape Winner { get; private set; } = Shape.Empty;
         public Board()
         {
@@ -19,6 +19,8 @@ namespace TicTacToe.Core.Entities
                 for (int j = 0; j < 3; j++)
                     fields[(i, j)] = Shape.Empty;
         }
+        
+
         public void PlaceFigure(int posX, int posY, Shape placedValue)
         {
             if (placedValue == Shape.Empty)
@@ -31,18 +33,22 @@ namespace TicTacToe.Core.Entities
 
             CheckWinAndSetWinner(placedValue);
         }
+        public void FlushBoard()
+        {
+            fields.Clear();
+        }
 
 
         private void CheckWinAndSetWinner(Shape lastPlayer)
         {
-            IsFinished = CheckIfBoardFull();
+            GameIsFinished = CheckIfBoardFull();
 
             bool somebodyWon = CheckRowsAndCollumns() || CheckCross();
 
             if (somebodyWon)
             {
                 Winner = lastPlayer;
-                IsFinished = true;
+                GameIsFinished = true;
             }
         }
         private bool CheckIfBoardFull()
