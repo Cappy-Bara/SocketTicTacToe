@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import Square from './Square';
 import EndGame from './EndGame';
+import signalR from '@microsoft/signalr';
 
 const INITIAL = '';
 const X_player = 'X';
@@ -18,6 +19,22 @@ const winCombination = [
 ];
 
 function TicTacToe() {
+    // const signalR = require("@microsoft/signalr");
+
+    let connection = new signalR.HubConnectionBuilder().withUrl('https://localhost:7209/play').build();
+
+    //what happend after you
+    connection.on('InitializePlayer', (data) => {
+        console.log(data);
+    });
+    connection.on('NextTurn', (data) => {
+        console.log(data);
+    });
+
+    connection.start().then(() => console.log('INITIAL'));
+
+    //-----------
+
     const [grid, setGrid] = useState(Array(9).fill(INITIAL));
     const [player, setPlayer] = useState(false);
     const [gameFinished, setGameFinished] = useState(false);
