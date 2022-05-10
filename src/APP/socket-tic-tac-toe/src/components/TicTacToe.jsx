@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import Square from './Square';
 import EndGame from './EndGame';
-import signalR from '@microsoft/signalr';
+// import signalR from '@microsoft/signalr';
 
 const INITIAL = '';
 const X_player = 'X';
@@ -19,9 +19,20 @@ const winCombination = [
 ];
 
 function TicTacToe() {
-    // const signalR = require("@microsoft/signalr");
+    const signalR = require('@microsoft/signalr');
 
-    let connection = new signalR.HubConnectionBuilder().withUrl('https://localhost:7209/play').build();
+    const position = {
+        PosX: 1,
+        PosY: 0,
+        Shape: 'X',
+    };
+
+    let connection = new signalR.HubConnectionBuilder()
+        .withUrl('http://localhost:5209/play', {
+            skipNegotiation: true,
+            transport: signalR.HttpTransportType.WebSockets,
+        })
+        .build();
 
     //what happend after you
     connection.on('InitializePlayer', (data) => {
@@ -32,6 +43,12 @@ function TicTacToe() {
     });
 
     connection.start().then(() => console.log('INITIAL'));
+
+    function sendPosition() {
+        connection.invoke('FigurePlaced', position);
+    }
+
+    sendPosition();
 
     //-----------
 
