@@ -32,9 +32,17 @@ namespace SocketTicTacToe.API.Hubs
 
         public async Task MakeMove(MakeMoveDto message)
         {
-            var playingFigure = (Shape)message.Shape;
+            var playingFigure = Enum.Parse<Shape>(message.Shape);
 
             board.PlaceFigure(message.PosX, message.PosY, playingFigure);
+
+            var figurePlacedData = new FigurePlacedDto
+            {
+                PosX = message.PosX,
+                PosY = message.PosY,
+                Shape = message.Shape,
+            };
+            await Clients.AllExcept(Context.ConnectionId).SendAsync("FigurePlaced", figurePlacedData);
 
             if (board.GameIsFinished)
             {

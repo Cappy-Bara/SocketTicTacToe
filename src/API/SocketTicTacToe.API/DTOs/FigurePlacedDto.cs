@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SocketTicTacToe.API.DTOs
 {
-    public class MakeMoveDto
+    public class FigurePlacedDto
     {
         public int PosX { get; set; }
         public int PosY { get; set; }
