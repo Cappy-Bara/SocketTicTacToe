@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TicTacToe.Core.Services
+namespace SocketTicTacToe.API.DTOs
 {
-    public class GameService
+    public class NextTurnDto
     {
-        
+        public string Shape { get; set; }
     }
 }
