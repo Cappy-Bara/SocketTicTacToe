@@ -1,0 +1,50 @@
+//MESSAGES SENDING FROM SERVER (API)
+
+//Name: InitializePlayer
+//Description: Message, which is sent from api after client connects to the server. Client gets in this message shape assigned to him.
+//Sending to: Single, recently connected user.
+//Schema:
+{
+  "Shape": "X" //Occuring values: "X", "O", "Empty". If "Empty" - too much users connected. Should show error.
+}
+
+//Name: NextTurn
+//Description: Information about which player shoud play next. After receiving this message, client should be able to place the figure.
+//Sending to: All of the players.
+//Schema:
+{
+  "Shape": "X" //Occuring values: "X", "O". "Empty" should not occure.
+}
+
+//Name: UserDisconnected
+//Description: Sends information, that user with who you were playing has disconnected from the game.
+//Sending to: All players, excluding disconnected one.
+//Schema: empty.
+
+
+//Name: GameFinished
+//Description: Message send to the users when the game has finished - draw, on one of the players has won.
+//Sending to: All players.
+//Schema:
+{
+  "Winner": "X" //Occuring values: "X", "O", "Empty". "Empty" occurs when there is a draw.
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//MESSAGES SENDING FROM CLIENT (FRONTEND)
+
+//Name: MakeMove
+//Description: Message which shoud be send when clicking on field
+//Schema:
+{
+  "PosX": 1,            //X-axis field position. Permitted values: 0-2;
+  "PosY": 0,            //Y-axis field position. Permitted values: 0-2;
+  "Shape": "X"          //Shape played by currently played user.
+}
+
+//Name: Reset
+//Description: Message, which should be send to reset the game, for example after winning.
+//Schema: empty
