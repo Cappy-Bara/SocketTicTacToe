@@ -69,7 +69,8 @@ namespace SocketTicTacToe.API.Hubs
 
             usersStorage.RemoveConnection(disconnectedUser);
 
-            await Clients.AllExcept(disconnectedUser).SendAsync("UserDisconnected");
+            if(usersStorage.GetNumberOfPlayers() < 2)
+                await Clients.AllExcept(disconnectedUser).SendAsync("UserDisconnected");
         }
 
 
