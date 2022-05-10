@@ -30,6 +30,17 @@
   "Winner": "X" //Occuring values: "X", "O", "Empty". "Empty" occurs when there is a draw.
 }
 
+//Name: FigurePlaced
+//Description: Message informing the opponent where user have placed his figure.
+//Sending to: Person who did't put the figure.
+//Schema:
+{
+  "PosX": 0,    // values from 0 to 2
+  "PosY": 0,    // values from 0 to 2
+  "Shape": "X" //"X" or "O"
+}
+
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -40,9 +51,9 @@
 //Description: Message which shoud be send when clicking on field
 //Schema:
 {
-  "PosX": 1,            //X-axis field position. Permitted values: 0-2;
-  "PosY": 0,            //Y-axis field position. Permitted values: 0-2;
-  "Shape": "X"          //Shape played by currently played user.
+  "PosX": 1, //X-axis field position. Permitted values: 0-2;
+  "PosY": 0, //Y-axis field position. Permitted values: 0-2;
+  "Shape": "X" //Shape played by currently played user.
 }
 
 //Name: Reset

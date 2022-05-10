@@ -7,7 +7,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocketTicTacToe.API", "Sock
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicTacToe.Core", "TicTacToe.Core\TicTacToe.Core.csproj", "{D2C7D33E-BAEF-4765-A5B3-DFE626C1AA23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocketTicTacToe.ConsoleClient", "..\ConsoleClient\SocketTicTacToe.ConsoleClient\SocketTicTacToe.ConsoleClient.csproj", "{E8146A51-A815-4BBF-9B88-F35AC785F8B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocketTicTacToe.ConsoleClient", "..\ConsoleClient\SocketTicTacToe.ConsoleClient\SocketTicTacToe.ConsoleClient.csproj", "{E8146A51-A815-4BBF-9B88-F35AC785F8B7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4DAE4FCF-7988-47EA-B2CC-BFB7BFCBA642}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\contracts.json = ..\..\contracts.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
