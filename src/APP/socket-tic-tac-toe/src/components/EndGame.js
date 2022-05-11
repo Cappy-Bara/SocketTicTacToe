@@ -1,20 +1,13 @@
 import React from 'react';
 
-function EndGame({ restartGame, player, draw, winCount, clearHistory }) {
+function EndGame({ restartGame, player}) {
     return (
         <div className="end-game-screen">
-            {!draw && <span className="win-text">{player ? 'O won' : 'X won'}</span>}
-            {draw && <span className="win-text">DRAW GAME</span>}
-
-            <span className="win-history">
-                X's wins: {winCount.X} <br /> O's wins: {winCount.O}{' '}
-            </span>
+            {player !== "Empty" && <span className="win-text">{player === "O" ? 'O won' : 'X won'}</span>}
+            {player === "Empty" && <span className="win-text">DRAW GAME</span>}
 
             <button className="btn" onClick={restartGame}>
                 RESTART GAME
-            </button>
-            <button className="btn" onClick={clearHistory}>
-                CLEAR HISTORY
             </button>
         </div>
     );

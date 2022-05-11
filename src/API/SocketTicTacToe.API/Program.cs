@@ -6,7 +6,9 @@ using TicTacToe.Core.Storages;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-builder.Services.AddSignalR();
+builder.Services.AddSignalR(opt => opt.EnableDetailedErrors = true);
+
+builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -37,8 +39,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
-// app.UseHttpsRedirection();
-
 app.UseRouting();
 
 app.UseCors();
@@ -46,7 +46,6 @@ app.UseCors();
 app.MapHub<GameHub>("/play");
 
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

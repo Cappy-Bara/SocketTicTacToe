@@ -36,6 +36,9 @@ namespace TicTacToe.Core.Entities
         public void FlushBoard()
         {
             fields.Clear();
+            for (int i = 0; i < 3; i++)
+                for (int j = 0; j < 3; j++)
+                    fields[(i, j)] = Shape.Empty;
         }
 
 
@@ -53,7 +56,7 @@ namespace TicTacToe.Core.Entities
         }
         private bool CheckIfBoardFull()
         {
-            return fields.Values.Any(x => x == Shape.Empty);
+            return !fields.Values.Any(x => x == Shape.Empty);
         }
         private bool CheckRowsAndCollumns()
         {

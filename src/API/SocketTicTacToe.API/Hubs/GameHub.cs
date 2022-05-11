@@ -55,7 +55,7 @@ namespace SocketTicTacToe.API.Hubs
                 return;
             }
 
-            playingFigure.SwapPlayer();
+            playingFigure = playingFigure == Shape.O ? Shape.X : Shape.O;
 
             var nextTurnData = new NextTurnDto()
             {
@@ -63,11 +63,12 @@ namespace SocketTicTacToe.API.Hubs
             };
 
             await Clients.All.SendAsync("NextTurn", nextTurnData);
+            Console.WriteLine("NextTurn sent.");
         }
-
         public async Task Reset()
         {
             board.FlushBoard();
+            await Clients.AllExcept(Context.ConnectionId).SendAsync("GameReseted");
             await TryBeginGame();
         }
 

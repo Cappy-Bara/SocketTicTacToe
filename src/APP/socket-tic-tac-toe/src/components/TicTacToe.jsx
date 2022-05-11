@@ -1,148 +1,121 @@
 import React, { useState } from 'react';
-
 import Square from './Square';
 import EndGame from './EndGame';
-// import signalR from '@microsoft/signalr';
 
-const INITIAL = '';
-const X_player = 'X';
-const O_player = 'O';
-const winCombination = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-];
+const signalR = require('@microsoft/signalr');
+
+let connection = new signalR.HubConnectionBuilder()
+    .withUrl('http://localhost:5209/play', {
+        skipNegotiation: true,
+        transport: signalR.HttpTransportType.WebSockets,
+    })
+    .build();
 
 function TicTacToe() {
-    const signalR = require('@microsoft/signalr');
 
-    const position = {
-        PosX: 1,
-        PosY: 0,
-        Shape: 'X',
-    };
+    const [PlayerShape, setPlayerShape] = useState("");
+    const [Turn, setPlayerTurn] = useState("");
+    const [Winner, setWinner] = useState();
+    const [gameFinished, setGameFinished] = useState(false);
 
-    let connection = new signalR.HubConnectionBuilder()
-        .withUrl('http://localhost:5209/play', {
-            skipNegotiation: true,
-            transport: signalR.HttpTransportType.WebSockets,
-        })
-        .build();
 
-    //what happend after you
-    connection.on('InitializePlayer', (data) => {
-        console.log(data);
-    });
-    connection.on('NextTurn', (data) => {
-        console.log(data);
-    });
+    const placeFigure = (position, shape) => {
+        let temp = { ...board };
+        temp[position] = shape;
 
-    connection.start().then(() => console.log('INITIAL'));
-
-    function sendPosition() {
-        connection.invoke('FigurePlaced', position);
+        setBoard(temp);
+        console.log(board)
     }
 
-    sendPosition();
+    connection.on('InitializePlayer', (data) => {
+        console.log(`GOT SHAPE: ${data.shape}`)
+        setPlayerShape(data.shape);
+    });
 
-    //-----------
+    connection.on('NextTurn', (data) => {
+        console.log(data.shape)
+        setPlayerTurn(data.shape);
+    });
 
-    const [grid, setGrid] = useState(Array(9).fill(INITIAL));
-    const [player, setPlayer] = useState(false);
-    const [gameFinished, setGameFinished] = useState(false);
-    const [draw, setDraw] = useState(false);
-    const [winCount, setWinCount] = useState({ X: 0, O: 0 });
+    connection.on('FigurePlaced', (data) => {
+        placeFigure(`(${data.posX},${data.posY})`, data.shape)
+    });
 
-    function isGameOver() {
-        if (!gameFinished) {
-            //* X win check
-            for (let i = 0; i < 8; i++) {
-                if (
-                    grid[winCombination[i][0]] === X_player && //check if any of win combination have just "X" or "O"
-                    grid[winCombination[i][1]] === X_player &&
-                    grid[winCombination[i][2]] === X_player
-                ) {
-                    setGameFinished(true);
-                    setWinCount({ ...winCount, X: winCount.X + 1 });
-                    console.log('X WON');
-                    return;
-                }
-            }
+    connection.on("GameFinished",(data) => {
+        console.log(data.winner);
+        setWinner(data.winner);
+        setGameFinished(true);
+    })
+    
+    connection.on("GameReseted",() => {
+        console.log("GameReseted")
+        restartedByAnotherPlayer();
+    })
 
-            //* O win check
-            for (let i = 0; i < 8; i++) {
-                if (
-                    grid[winCombination[i][0]] === O_player && //check if any of win combination have just "X" or "O"
-                    grid[winCombination[i][1]] === O_player &&
-                    grid[winCombination[i][2]] === O_player
-                ) {
-                    setGameFinished(true);
-                    setWinCount({ ...winCount, O: winCount.O + 1 });
-                    console.log('O WON');
-                    return;
-                }
-            }
-            //* Draw game check
-            //No initial in squares, mean draw
-            if (!grid.includes(INITIAL)) {
-                setDraw(true);
-                setGameFinished(true);
-                console.log('DRAW');
+    if(connection.state !== "Connected"){
+        connection.start()
+        .then(() => console.log('CONNECTION INITIALIZED'));
+    }
+
+
+    function sendPosition(position) {
+        let posX = Number(position[1]);
+        let posY = Number(position[3]);
+
+        let dataObject = {
+            "PosX": posX,
+            "PosY": posY,
+            "Shape": PlayerShape,
+        }
+
+        connection.invoke('MakeMove', dataObject);
+    }
+
+    const initializeBoard = () => {
+        const dict = {}
+
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                dict[`(${i},${j})`] = "Empty";
             }
         }
+
+        return dict;
     }
+    const [board, setBoard] = useState(initializeBoard);
 
     function restartGame() {
-        setGrid(Array(9).fill(INITIAL));
         setGameFinished(false);
-        setDraw(false);
+        setWinner(null);
+        setBoard(initializeBoard());
+        console.log("RESTART");
+        connection.invoke('Reset');
     }
 
-    function clearHistory() {
-        setWinCount({ X: 0, O: 0 });
-        restartGame();
-        console.log('clear history');
-    }
-
-    isGameOver();
-
-    function handleClick(id) {
-        setGrid(
-            grid.map((item, index) => {
-                if (index === id) {
-                    if (player) {
-                        return X_player;
-                    } else {
-                        return O_player;
-                    }
-                } else {
-                    return item;
-                }
-            })
-        );
-        setPlayer(!player);
+    function restartedByAnotherPlayer(){
+        setGameFinished(false);
+        setWinner(null);
+        setBoard(initializeBoard());
     }
 
     return (
         <div>
             <span className="win-history">
-                X's wins: {winCount.X} <br /> O's wins: {winCount.O}{' '}
+                Playing As: {PlayerShape} <br /> Turn: {Turn}
             </span>
             {gameFinished && (
                 <EndGame
-                    clearHistory={clearHistory}
-                    winCount={winCount}
                     restartGame={restartGame}
-                    player={player}
-                    draw={draw}
+                    player={Winner}
                 />
             )}
-            <Square clickedArray={grid} handleClick={handleClick} />
+            <Square
+                boardElements={board}
+                gameFinished={gameFinished}
+                sendClick={sendPosition}
+                placeFigure={placeFigure}
+                userFigure={PlayerShape}
+                turn={Turn} />
         </div>
     );
 }

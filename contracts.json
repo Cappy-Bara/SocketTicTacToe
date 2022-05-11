@@ -47,7 +47,7 @@
 
 //MESSAGES SENDING FROM CLIENT (FRONTEND)
 
-//Name: MakeMove
+//Name: c
 //Description: Message which shoud be send when clicking on field
 //Schema:
 {

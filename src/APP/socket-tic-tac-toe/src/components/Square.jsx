@@ -1,19 +1,28 @@
 import React from 'react';
 
-function Square({ clickedArray, handleClick }) {
+function Square({ boardElements,sendClick,placeFigure, userFigure,turn,gameFinished}) {
+    
+    const handleClickNew = (position) => {
+        
+        if(userFigure != turn || gameFinished)
+            return
+
+        sendClick(position);
+        placeFigure(position,userFigure);
+    }
+    
+    
     return (
         <div className="board">
-            {clickedArray.map((item, index) => {
-                if (item === '') {
+            {Object.keys(boardElements).map((item, index) => {
+                if (boardElements[item] === 'Empty') {
                     return (
-                        <div key={index} className="square" onClick={() => handleClick(index)}>
-                            {item}
-                        </div>
+                        <div key={index} className="square" onClick={() => handleClickNew(item)} />
                     );
                 } else {
                     return (
                         <div key={index} className="square clicked">
-                            {item}
+                            {boardElements[item]}
                         </div>
                     );
                 }
