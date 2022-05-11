@@ -12,13 +12,4 @@ namespace TicTacToe.Core.Entities
         O,
         X
     }
-
-    public static class ShapeExtensions
-    {
-        public static Shape SwapPlayer(this Shape shape)
-        {
-            shape = shape == Shape.O ? Shape.X : Shape.O;
-            return shape;
-        }
-    }
 }
