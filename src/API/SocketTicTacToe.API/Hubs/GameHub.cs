@@ -23,7 +23,8 @@ namespace SocketTicTacToe.API.Hubs
             var output = new OnConnectDto();
             output.Shape = userShape.ToString();
 
-            usersStorage.AddConnection(Context.ConnectionId, userShape);
+            if(userShape != Shape.Empty)
+                usersStorage.AddConnection(Context.ConnectionId, userShape);
 
             await Clients.Client(Context.ConnectionId).SendAsync("InitializePlayer", output);
 

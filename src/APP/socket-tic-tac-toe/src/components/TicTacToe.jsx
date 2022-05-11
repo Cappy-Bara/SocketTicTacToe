@@ -29,6 +29,7 @@ function TicTacToe() {
 
     connection.on('InitializePlayer', (data) => {
         console.log(`GOT SHAPE: ${data.shape}`)
+        console.log(PlayerShape)
         setPlayerShape(data.shape);
     });
 
@@ -41,20 +42,20 @@ function TicTacToe() {
         placeFigure(`(${data.posX},${data.posY})`, data.shape)
     });
 
-    connection.on("GameFinished",(data) => {
+    connection.on("GameFinished", (data) => {
         console.log(data.winner);
         setWinner(data.winner);
         setGameFinished(true);
     })
-    
-    connection.on("GameReseted",() => {
+
+    connection.on("GameReseted", () => {
         console.log("GameReseted")
         restartedByAnotherPlayer();
     })
 
-    if(connection.state !== "Connected"){
+    if (connection.state !== "Connected") {
         connection.start()
-        .then(() => console.log('CONNECTION INITIALIZED'));
+            .then(() => console.log('CONNECTION INITIALIZED'));
     }
 
 
@@ -92,31 +93,36 @@ function TicTacToe() {
         connection.invoke('Reset');
     }
 
-    function restartedByAnotherPlayer(){
+    function restartedByAnotherPlayer() {
         setGameFinished(false);
         setWinner(null);
         setBoard(initializeBoard());
     }
 
+
     return (
-        <div>
-            <span className="win-history">
-                Playing As: {PlayerShape} <br /> Turn: {Turn}
-            </span>
-            {gameFinished && (
-                <EndGame
-                    restartGame={restartGame}
-                    player={Winner}
-                />
-            )}
-            <Square
-                boardElements={board}
-                gameFinished={gameFinished}
-                sendClick={sendPosition}
-                placeFigure={placeFigure}
-                userFigure={PlayerShape}
-                turn={Turn} />
-        </div>
+        PlayerShape !== "Empty" ?
+            <div>
+                <span className="win-history">
+                    Playing As: {PlayerShape} <br /> Turn: {Turn}
+                </span>
+                {gameFinished && (
+                    <EndGame
+                        restartGame={restartGame}
+                        player={Winner}
+                    />
+                )}
+                <Square
+                    boardElements={board}
+                    gameFinished={gameFinished}
+                    sendClick={sendPosition}
+                    placeFigure={placeFigure}
+                    userFigure={PlayerShape}
+                    turn={Turn} />
+            </div> :
+            <div className="end-game-screen">
+                <span className="win-text">Players Limit Reached</span>
+            </div>
     );
 }
 
