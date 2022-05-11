@@ -98,7 +98,7 @@ namespace TicTacToe.Core.Entities
             if (CheckWin(valuesFirst))
                 return true;
 
-            var valuesSecond = fields.Where(x => new List<(int, int)>() { (0, 0), (1, 1), (2, 2) }.Contains(x.Key))
+            var valuesSecond = fields.Where(x => new List<(int, int)>() { (0, 2), (1, 1), (2, 0) }.Contains(x.Key))
                 .Select(x => x.Value)
                 .Distinct();
 
